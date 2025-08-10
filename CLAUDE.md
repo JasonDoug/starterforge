@@ -4,57 +4,50 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-StarterForge is a CLI tool that generates customized project scaffolds based on JSON configuration files. The tool takes user selections for frontend, backend, database, auth, deployment, and optional features to create starter project templates with boilerplate code, configuration files, and setup scripts.
+StarterForge is a CLI tool that generates customized project scaffolds based on JSON configuration files. The tool processes user configurations through an 8-step wizard flow (defined in requirements) to create starter project templates with boilerplate code, configuration files, and setup scripts.
 
 ## Core Architecture
 
-The project consists of three main components:
+The project has a simple two-file architecture:
 
-1. **Configuration Schema** (`starterforge.config.schema.ts`) - Zod-based validation schema defining the structure for project configurations
-2. **CLI Tool** (`starterforge-cli.mjs`) - Node.js CLI that processes config files and generates project scaffolds
-3. **Requirements Specification** (`STARTERFORGE_REQUIREMENTS.md`) - Comprehensive specification for the 8-step wizard flow
+1. **Configuration Schema** (`starterforge.config.schema.ts`) - Zod-based validation schema defining the complete structure for project configurations including project types, frontend/backend frameworks, databases, auth providers, deployment targets, and optional features
+2. **CLI Tool** (`starterforge-cli.mjs`) - Node.js CLI that validates JSON configs against the schema and generates project scaffolds with files and executable bash scripts
 
-### Configuration System
-
-The config schema supports:
-- Project types: web_app, frontend_only, backend_only, cli_tool, browser_extension, microservice, custom
-- Frontend frameworks with UI library selections
-- Backend languages/frameworks with feature toggles
-- Database engines with ORM choices
-- Authentication providers with optional features
-- DevOps/deployment configurations
-- Optional integrations and features
-
-### Project Scaffold Generation
-
-The CLI generates:
-- Directory structure based on project type
-- README.md with project configuration summary
-- .env.example with placeholder environment variables
-- Language-specific entry files (main.py, index.js, App.tsx)
-- package.json for Node.js projects
-- Executable scaffold.sh script for reproducible setup
+The `STARTERFORGE_REQUIREMENTS.md` contains the complete specification for the planned 8-step wizard UI flow, but only the CLI scaffold generator is currently implemented.
 
 ## Development Commands
-
-The CLI is executed directly with Node.js:
 
 ```bash
 # Run the CLI tool with a config file
 node starterforge-cli.mjs path/to/config.json
 
-# The tool expects a JSON config file that validates against StarterForgeConfigSchema
-# Generated scaffolds are output to ./output/<project_type>/
+# Available modes:
+node starterforge-cli.mjs config.json --mode all          # Generate files + script (default)
+node starterforge-cli.mjs config.json --mode scaffold-only # Generate files only
+node starterforge-cli.mjs config.json --mode script-only   # Generate script only
 ```
 
 ## Key Technical Details
 
-- Built with ES modules (`.mjs` files)
-- Uses Zod for runtime schema validation
-- Generates both files and bash scripts for project setup
-- Supports multiple project types with conditional logic
-- Configuration-driven scaffold generation
+- **ES Modules**: Built with `.mjs` files and ES module imports
+- **Schema Validation**: Uses Zod for runtime JSON config validation with TypeScript types
+- **Dual Output**: Generates both actual project files AND executable bash scripts for reproducible setup
+- **File Generation Strategy**: Uses conditional logic based on project_type and technology selections
+- **Output Structure**: Creates scaffolds in `./output/<project_type>/` directory
+- **Script Generation**: Creates executable `scaffold.sh` files with proper permissions (chmod 755)
 
-## Project Status
+## Configuration Schema Structure
 
-Currently implements basic scaffold generation for the core project types. The full wizard UI and advanced features outlined in the requirements are planned for future development sprints.
+The schema supports these main sections:
+- `project_type`: Enum of web_app, frontend_only, backend_only, cli_tool, browser_extension, microservice, custom
+- `frontend`: Framework selection (React, Vue, etc.) with UI libraries array
+- `backend`: Language/framework selection with features array
+- `database`: Engine selection with ORM and model options
+- `auth`: Provider selection with feature toggles
+- `devops`: Deployment targets with CI/CD and Docker options
+- `optional_features`: Array of additional integrations
+- `output`: Format preferences and repository settings
+
+## Current Implementation Status
+
+This is an early-stage CLI tool that generates basic scaffolds. The comprehensive wizard UI described in the README and requirements is aspirational - currently only the JSON config processing and basic file generation is implemented.

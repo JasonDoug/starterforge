@@ -1,0 +1,37 @@
+{
+  "project_type": "web_app",
+  "frontend": {
+    "framework": "react",
+    "ui_libraries": ["tailwindcss"]
+  },
+  "backend": {
+    "language": "node",
+    "framework": "express"
+  },
+  "database": {
+    "engines": ["postgresql"],
+    "orm": "prisma"
+  },
+  "auth": {
+    "provider": "auth0",
+    "include_ui": true
+  },
+  "devops": {
+    "deployment_targets": ["vercel"],
+    "ci_cd": true,
+    "docker": {
+      "enabled": false,
+      "compose": false
+    }
+  },
+  "optional_features": [
+    {
+      "feature": "api_docs",
+      "tool": "swagger",
+      "include_demo": false
+    }
+  ],
+  "output": {
+    "format": ["zip"]
+  }
+}

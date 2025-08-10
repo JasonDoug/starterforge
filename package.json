@@ -1,0 +1,68 @@
+{
+  "name": "starterforge",
+  "version": "1.0.0",
+  "description": "The ultimate project scaffold generator - create customized starter projects with an 8-step wizard or powerful CLI",
+  "main": "starterforge-cli.mjs",
+  "type": "module",
+  "keywords": [
+    "scaffold",
+    "generator",
+    "boilerplate",
+    "starter",
+    "template",
+    "cli",
+    "react",
+    "vue",
+    "node",
+    "python",
+    "fullstack",
+    "wizard"
+  ],
+  "author": "StarterForge Contributors",
+  "license": "MIT",
+  "homepage": "https://github.com/starterforge/starterforge#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/starterforge/starterforge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/starterforge/starterforge/issues"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "starterforge-cli.mjs",
+    "starterforge.config.schema.js",
+    "web/",
+    "web-server.mjs",
+    "README.md",
+    "CLAUDE.md"
+  ],
+  "scripts": {
+    "start": "node starterforge-cli.mjs",
+    "web": "node web-server.mjs",
+    "dev": "node web-server.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "cli": "node starterforge-cli.mjs",
+    "prepare": "chmod +x starterforge-cli.mjs",
+    "prepublishOnly": "npm run test"
+  },
+  "dependencies": {
+    "commander": "^11.0.0",
+    "express": "^4.18.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "vitest": "^1.0.0",
+    "@vitest/ui": "^1.0.0",
+    "supertest": "^6.3.0"
+  },
+  "bin": {
+    "starterforge": "./starterforge-cli.mjs"
+  },
+  "preferGlobal": true
+}

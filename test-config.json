@@ -1,0 +1,22 @@
+{
+  "project_type": "web_app",
+  "frontend": {
+    "framework": "react",
+    "ui_libraries": ["tailwindcss"]
+  },
+  "backend": {
+    "language": "node",
+    "framework": "express"
+  },
+  "database": {
+    "engines": ["postgresql"],
+    "orm": "prisma"
+  },
+  "auth": {
+    "provider": "auth0",
+    "include_ui": true
+  },
+  "output": {
+    "format": ["zip"]
+  }
+}
