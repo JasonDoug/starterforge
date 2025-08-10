@@ -1,0 +1,28 @@
+Sprint,Prompt
+Sprint 1 – Project Setup & Config Model,Define the JSON schema for storing user selections across all wizard steps.
+Sprint 1 – Project Setup & Config Model,Implement a config parser/validator using Zod (TypeScript) or Pydantic (Python).
+Sprint 1 – Project Setup & Config Model,Create CLI or backend API endpoint to receive and process this config.
+Sprint 2 – Step Engine / Wizard Flow,Build a modular step-by-step wizard engine with forward/back navigation.
+Sprint 2 – Step Engine / Wizard Flow,Implement logic to skip steps based on project type selection.
+Sprint 2 – Step Engine / Wizard Flow,Create schema for dynamic step rendering based on config rules.
+Sprint 3 – Frontend Framework Selection UI,Create a responsive UI component for selecting frontend frameworks.
+Sprint 3 – Frontend Framework Selection UI,Dynamically load compatible UI libraries based on selected framework.
+Sprint 3 – Frontend Framework Selection UI,Preview folder structure and boilerplate for selected stack.
+Sprint 4 – Backend Framework & Features,Build UI for selecting backend language and framework.
+Sprint 4 – Backend Framework & Features,"Add support for toggling backend features (REST, GraphQL, Admin UI)."
+Sprint 4 – Backend Framework & Features,Generate a backend starter scaffold based on framework and selected features.
+Sprint 5 – Database Integration Module,Create form for choosing database engines and ORMs.
+Sprint 5 – Database Integration Module,Support optional demo model scaffolding.
+Sprint 5 – Database Integration Module,Generate migration and connection config files for selected DB.
+Sprint 6 – Auth System & User Flow,Implement auth provider selection and conditional UI options.
+Sprint 6 – Auth System & User Flow,Generate starter code for login/signup with selected provider.
+Sprint 6 – Auth System & User Flow,Add optional features like email verification and RBAC toggles.
+Sprint 7 – DevOps & Deployment Settings,Build interface for selecting deployment platforms.
+Sprint 7 – DevOps & Deployment Settings,Generate Dockerfile and optional GitHub Actions config.
+Sprint 7 – DevOps & Deployment Settings,Auto-generate .env files with placeholder values.
+Sprint 8 – Optional Features Engine,"Build UI for toggling optional features like Stripe, Admin Panel, Analytics."
+Sprint 8 – Optional Features Engine,Create injectors to modify scaffold with chosen integrations.
+Sprint 8 – Optional Features Engine,Include option for demo data or blank setups.
+Sprint 9 – Output Generation & Delivery,Render summary of all user selections.
+Sprint 9 – Output Generation & Delivery,Support download as zip and GitHub OAuth-based repo push.
+Sprint 9 – Output Generation & Delivery,Auto-generate README and setup instructions.
