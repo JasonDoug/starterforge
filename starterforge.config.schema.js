@@ -79,4 +79,4 @@ export const StarterForgeConfigSchema = z.object({
   output: OutputSchema
 });
 
-export type StarterForgeConfig = z.infer<typeof StarterForgeConfigSchema>;
+// export type StarterForgeConfig = z.infer<typeof StarterForgeConfigSchema>;

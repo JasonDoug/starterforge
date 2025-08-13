@@ -1,0 +1,9 @@
+{
+  "project_type": "cli_tool",
+  "backend": {
+    "language": "python"
+  },
+  "output": {
+    "format": ["zip"]
+  }
+}
