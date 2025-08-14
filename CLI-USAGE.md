@@ -23,7 +23,17 @@ npm link  # Creates global symlink
 
 ## Quick Start
 
-### 1. Create a Configuration File
+### Option 1: Interactive Wizard (Recommended)
+
+The easiest way to get started:
+
+```bash
+starterforge create --interactive
+```
+
+This launches an 8-step guided wizard that walks you through all configuration options with intelligent filtering and recommendations.
+
+### Option 2: Configuration File
 
 Create a JSON configuration file (e.g., `my-project.json`):
 
@@ -52,37 +62,88 @@ Create a JSON configuration file (e.g., `my-project.json`):
 }
 ```
 
-### 2. Generate Your Project
+Then generate your project:
 
 ```bash
-starterforge my-project.json
+starterforge generate --config my-project.json
 ```
 
 ## CLI Commands
 
-### Basic Usage
+### Main Commands
+
 ```bash
-starterforge <config-file> [options]
+starterforge --help                    # Show all available commands
+starterforge create --interactive      # Launch interactive 8-step wizard  
+starterforge generate --config <file>  # Generate from configuration file
+starterforge list <type>               # List available options
 ```
 
-### Available Options
+### Generate Command
 
-- `--mode <mode>`: Choose output mode
-  - `all` (default): Generate both files and bash script
-  - `scaffold-only`: Generate files only
-  - `script-only`: Generate bash script only
-
-### Examples
+Generate project from configuration file:
 
 ```bash
+starterforge generate --config <path> [options]
+```
+
+**Options:**
+- `--config <path>`: Path to JSON configuration file (required)
+- `--mode <mode>`: Output mode (default: "all")
+  - `all`: Generate both files and bash script
+  - `scaffold-only`: Generate files only
+  - `script-only`: Generate bash script only
+- `--output-dir <dir>`: Custom output directory (default: "output")
+
+**Examples:**
+```bash
 # Generate full project
-starterforge config.json
+starterforge generate --config config.json
 
 # Generate files only (no bash script)
-starterforge config.json --mode scaffold-only
+starterforge generate --config config.json --mode scaffold-only
 
-# Generate bash script only (no files)
-starterforge config.json --mode script-only
+# Generate to custom directory
+starterforge generate --config config.json --output-dir my-projects
+```
+
+### Interactive Create Command
+
+Launch the interactive wizard:
+
+```bash
+starterforge create --interactive
+```
+
+The wizard guides you through 8 steps:
+1. **Project Type** - Choose web app, CLI tool, etc.
+2. **Frontend Technology** - Select framework and UI libraries
+3. **Backend Technology** - Pick language and framework
+4. **Database & Storage** - Configure data layer
+5. **Authentication** - Set up user management
+6. **Deployment & DevOps** - Configure hosting options
+7. **Optional Features** - Add integrations
+8. **Generate & Download** - Review and create project
+
+### List Commands
+
+Explore available options:
+
+```bash
+starterforge list frameworks    # List frontend frameworks
+starterforge list databases     # List database engines  
+starterforge list backends      # List backend options
+starterforge list auth          # List authentication providers
+starterforge list types         # List project types
+```
+
+### Backwards Compatibility
+
+The old usage pattern still works:
+
+```bash
+starterforge config.json                    # Direct config file
+starterforge config.json --mode script-only # With legacy options
 ```
 
 ## Configuration Schema
@@ -221,13 +282,19 @@ StarterForge generates projects in `./output/<project_type>/` with:
 
 ## Web Interface
 
-For a visual wizard experience, use:
+For a visual wizard experience, run the web server:
 
 ```bash
-npm install starterforge
-npx starterforge web
+npm run web
 # Opens web wizard at http://localhost:3001
 ```
+
+The web interface provides the same 8-step wizard as the CLI interactive mode, but with a visual interface featuring:
+- Real-time configuration preview
+- Intelligent option filtering  
+- Drag-and-drop interface elements
+- Progress tracking
+- Visual project summaries
 
 ## Troubleshooting
 

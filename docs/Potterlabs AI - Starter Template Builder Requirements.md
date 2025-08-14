@@ -7,19 +7,19 @@ This will be an interactive wizard-driven tool
 
 
 
-### 🧱 Project Name (Working Title)
+### Project Name (Working Title)
 
 **StarterForge** (we can rename later)
 
 * * *
 
-### 🎯 Product Goal
+### Product Goal
 
 Create a web-based tool that guides users through building a customized starter project template via a step-by-step wizard interface. At the end, the user receives a downloadable (or GitHub-pushable) starter project scaffold based on their selections.
 
 * * *
 
-### 🪄 Wizard Steps (Initial Flow)
+### Wizard Steps (Initial Flow)
 
 We’ll write detailed requirements for each step, but first let’s outline the typical user flow:
 
@@ -56,15 +56,15 @@ Step 1 (“Project Type Selection”)
 
 * * *
 
-### 🧩 Step 1 – Project Type Selection
+### Step 1 – Project Type Selection
 
-#### 📝 User Story
+#### User Story
 
 _As a user, I want to select the type of project I’m building so the system can pre-load relevant tech stack and configuration options in later steps._
 
 * * *
 
-#### ✅ Functional Requirements
+#### Functional Requirements
 
 1. **Display a list of starter project types**
     
@@ -124,15 +124,15 @@ _As a user, I want to select the type of project I’m building so the system ca
 
 * * *
 
-### 🎨 Step 2 – Frontend Tech Selection
+### Step 2 – Frontend Tech Selection
 
-#### 📝 User Story
+#### User Story
 
 _As a user, I want to choose a frontend framework and UI stack so the starter template includes the tools and structure I need for building the UI._
 
 * * *
 
-#### ✅ Functional Requirements
+#### Functional Requirements
 
 1. **Display a list of frontend technologies (if applicable)**
     
@@ -214,15 +214,15 @@ _As a user, I want to choose a frontend framework and UI stack so the starter te
 
 * * *
 
-### 🧠 Step 3 – Backend Tech Selection
+### Step 3 – Backend Tech Selection
 
-#### 📝 User Story
+#### User Story
 
 _As a user, I want to choose a backend framework or runtime so my starter template is scaffolded with the correct project structure, routing, and tooling._
 
 * * *
 
-#### ✅ Functional Requirements
+#### Functional Requirements
 
 1. **Display list of backend runtimes and frameworks**
     
@@ -317,13 +317,13 @@ Shall I continue?
 
 ### 🗄️ Step 4 – Database & Storage Options
 
-#### 📝 User Story
+#### User Story
 
 _As a user, I want to choose what database or storage systems my project will use so my starter template includes the appropriate connection setup, models, and sample config._
 
 * * *
 
-#### ✅ Functional Requirements
+#### Functional Requirements
 
 1. **Display database engine choices**
     
@@ -410,13 +410,13 @@ Next up: **Step 5 – Auth & User System**
 
 ### 🔐 Step 5 – Auth & User System
 
-#### 📝 User Story
+#### User Story
 
 _As a user, I want to choose how authentication works in my project so that the starter template includes user management scaffolding and necessary integrations._
 
 * * *
 
-#### ✅ Functional Requirements
+#### Functional Requirements
 
 1. **Show auth system options**
     
@@ -497,13 +497,13 @@ Next is **Step 6 – Deployment & DevOps**
 
 ### 🚀 Step 6 – Deployment & DevOps
 
-#### 📝 User Story
+#### User Story
 
 _As a user, I want to configure how the project will be deployed and tested so the starter template includes deployment scripts, CI/CD configs, and containerization as needed._
 
 * * *
 
-#### ✅ Functional Requirements
+#### Functional Requirements
 
 1. **Select deployment target(s)**
     
@@ -596,13 +596,13 @@ Next: **Step 7 – Optional Features**
 
 ### 🧩 Step 7 – Optional Features
 
-#### 📝 User Story
+#### User Story
 
 _As a user, I want to add optional features or integrations to enhance the functionality of my starter template._
 
 * * *
 
-#### ✅ Functional Requirements
+#### Functional Requirements
 
 1. **Show a list of optional add-ons**
     
@@ -679,13 +679,13 @@ Continue?
 
 ### 📦 Step 8 – Output Preferences
 
-#### 📝 User Story
+#### User Story
 
 _As a user, I want to choose how to receive my starter template so I can immediately begin development or share it with others._
 
 * * *
 
-#### ✅ Functional Requirements
+#### Functional Requirements
 
 1. **Offer output format options**
     

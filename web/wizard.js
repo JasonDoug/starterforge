@@ -48,59 +48,56 @@ function wizardApp() {
             {
                 id: 'web_app',
                 name: 'Web Application',
-                icon: '🌐',
                 description: 'Full-stack web application with frontend and backend'
             },
             {
                 id: 'frontend_only',
                 name: 'Frontend Only',
-                icon: '💻',
                 description: 'Client-side application (SPA, static site)'
             },
             {
                 id: 'backend_only', 
                 name: 'Backend API',
-                icon: '⚡',
                 description: 'REST API or GraphQL backend service'
             },
             {
                 id: 'cli_tool',
                 name: 'CLI Tool',
-                icon: '⌨️',
                 description: 'Command-line interface application'
             },
             {
                 id: 'microservice',
                 name: 'Microservice',
-                icon: '🔧',
                 description: 'Small, focused service for distributed architecture'
             },
             {
                 id: 'browser_extension',
                 name: 'Browser Extension',
-                icon: '🧩',
                 description: 'Browser extension for Chrome, Firefox, etc.'
             }
         ],
 
         frontendFrameworks: [
-            { id: 'react', name: 'React', icon: '⚛️' },
-            { id: 'vue', name: 'Vue.js', icon: '💚' },
-            { id: 'svelte', name: 'Svelte', icon: '🧡' },
-            { id: 'angular', name: 'Angular', icon: '🅰️' },
-            { id: 'nextjs', name: 'Next.js', icon: '▲' },
-            { id: 'nuxt', name: 'Nuxt.js', icon: '💚' },
-            { id: 'html', name: 'HTML/CSS/JS', icon: '🌐' },
-            { id: 'none', name: 'None', icon: '❌' }
+            { id: 'react', name: 'React' },
+            { id: 'vue', name: 'Vue.js' },
+            { id: 'svelte', name: 'Svelte' },
+            { id: 'angular', name: 'Angular' },
+            { id: 'nextjs', name: 'Next.js' },
+            { id: 'nuxt', name: 'Nuxt.js' },
+            { id: 'html', name: 'HTML/CSS/JS' },
+            { id: 'none', name: 'None' }
         ],
 
         uiLibraries: [
-            { id: 'tailwindcss', name: 'Tailwind CSS', icon: '🎨' },
-            { id: 'shadcn', name: 'shadcn/ui', icon: '🎭' },
-            { id: 'chakra', name: 'Chakra UI', icon: '⭐' },
-            { id: 'mui', name: 'Material-UI', icon: '📦' },
-            { id: 'antd', name: 'Ant Design', icon: '🐜' },
-            { id: 'bootstrap', name: 'Bootstrap', icon: '🅱️' }
+            { id: 'tailwindcss', name: 'Tailwind CSS', hidden: false, recommended: false },
+            { id: 'shadcn', name: 'shadcn/ui', hidden: false, recommended: false },
+            { id: 'chakra', name: 'Chakra UI', hidden: false, recommended: false },
+            { id: 'mui', name: 'Material-UI', hidden: false, recommended: false },
+            { id: 'antd', name: 'Ant Design', hidden: false, recommended: false },
+            { id: 'bootstrap', name: 'Bootstrap', hidden: false, recommended: false },
+            { id: 'vuetify', name: 'Vuetify', hidden: false, recommended: false },
+            { id: 'quasar', name: 'Quasar', hidden: false, recommended: false },
+            { id: 'primeng', name: 'PrimeNG', hidden: false, recommended: false }
         ],
 
         backendOptions: [
@@ -109,7 +106,6 @@ function wizardApp() {
                 language: 'node',
                 framework: 'express',
                 name: 'Node.js + Express',
-                icon: '🟢',
                 description: 'Fast, minimalist web framework for Node.js'
             },
             {
@@ -117,7 +113,6 @@ function wizardApp() {
                 language: 'node', 
                 framework: 'fastify',
                 name: 'Node.js + Fastify',
-                icon: '⚡',
                 description: 'Fast and low overhead web framework'
             },
             {
@@ -125,7 +120,6 @@ function wizardApp() {
                 language: 'python',
                 framework: 'fastapi',
                 name: 'Python + FastAPI',
-                icon: '🐍',
                 description: 'Modern, fast web framework for building APIs'
             },
             {
@@ -133,7 +127,6 @@ function wizardApp() {
                 language: 'python',
                 framework: 'django',
                 name: 'Python + Django',
-                icon: '🎸',
                 description: 'High-level Python web framework'
             },
             {
@@ -141,7 +134,6 @@ function wizardApp() {
                 language: 'go',
                 framework: 'fiber',
                 name: 'Go + Fiber',
-                icon: '🐹',
                 description: 'Express-inspired web framework written in Go'
             },
             {
@@ -149,65 +141,70 @@ function wizardApp() {
                 language: 'rust',
                 framework: 'axum',
                 name: 'Rust + Axum',
-                icon: '🦀',
                 description: 'Ergonomic and modular web framework for Rust'
             }
         ],
 
         databases: [
-            { id: 'postgresql', name: 'PostgreSQL', icon: '🐘' },
-            { id: 'mysql', name: 'MySQL', icon: '🐬' },
-            { id: 'sqlite', name: 'SQLite', icon: '💾' },
-            { id: 'mongodb', name: 'MongoDB', icon: '🍃' },
-            { id: 'redis', name: 'Redis', icon: '🔴' },
-            { id: 'none', name: 'None', icon: '❌' }
+            { id: 'postgresql', name: 'PostgreSQL' },
+            { id: 'mysql', name: 'MySQL' },
+            { id: 'sqlite', name: 'SQLite' },
+            { id: 'mongodb', name: 'MongoDB' },
+            { id: 'redis', name: 'Redis' },
+            { id: 'none', name: 'None' }
         ],
 
         ormOptions: [
-            { id: 'prisma', name: 'Prisma' },
-            { id: 'typeorm', name: 'TypeORM' },
-            { id: 'sequelize', name: 'Sequelize' },
-            { id: 'mongoose', name: 'Mongoose' },
-            { id: 'sqlalchemy', name: 'SQLAlchemy' },
-            { id: 'gorm', name: 'GORM' }
+            { id: 'prisma', name: 'Prisma', hidden: false, recommended: false },
+            { id: 'typeorm', name: 'TypeORM', hidden: false, recommended: false },
+            { id: 'sequelize', name: 'Sequelize', hidden: false, recommended: false },
+            { id: 'mongoose', name: 'Mongoose', hidden: false, recommended: false },
+            { id: 'sqlalchemy', name: 'SQLAlchemy', hidden: false, recommended: false },
+            { id: 'gorm', name: 'GORM', hidden: false, recommended: false }
         ],
 
         authProviders: [
             {
                 id: 'none',
                 name: 'No Authentication',
-                icon: '❌',
-                description: 'Skip authentication setup'
+                description: 'Skip authentication setup',
+                hidden: false,
+                recommended: false
             },
             {
                 id: 'auth0',
                 name: 'Auth0',
-                icon: '🔐',
-                description: 'Complete authentication and authorization platform'
+                description: 'Complete authentication and authorization platform',
+                hidden: false,
+                recommended: false
             },
             {
                 id: 'clerk',
                 name: 'Clerk',
-                icon: '👤',
-                description: 'Complete user management platform'
+                description: 'Complete user management platform',
+                hidden: false,
+                recommended: false
             },
             {
                 id: 'firebase',
                 name: 'Firebase Auth',
-                icon: '🔥',
-                description: 'Google Firebase authentication service'
+                description: 'Google Firebase authentication service',
+                hidden: false,
+                recommended: false
             },
             {
                 id: 'supabase',
                 name: 'Supabase Auth',
-                icon: '⚡',
-                description: 'Open source Firebase alternative'
+                description: 'Open source Firebase alternative',
+                hidden: false,
+                recommended: false
             },
             {
                 id: 'jwt',
                 name: 'Custom JWT',
-                icon: '🎫',
-                description: 'Custom JSON Web Token implementation'
+                description: 'Custom JSON Web Token implementation',
+                hidden: false,
+                recommended: false
             }
         ],
 
@@ -215,37 +212,31 @@ function wizardApp() {
             {
                 id: 'vercel',
                 name: 'Vercel',
-                icon: '▲',
                 description: 'Frontend cloud platform with serverless functions'
             },
             {
                 id: 'netlify',
                 name: 'Netlify',
-                icon: '🌐',
                 description: 'All-in-one platform for modern web projects'
             },
             {
                 id: 'railway',
                 name: 'Railway',
-                icon: '🚂',
                 description: 'Infrastructure platform for full-stack applications'
             },
             {
                 id: 'render',
                 name: 'Render',
-                icon: '🎨',
                 description: 'Cloud platform for modern applications'
             },
             {
                 id: 'aws',
                 name: 'AWS',
-                icon: '☁️',
                 description: 'Amazon Web Services cloud platform'
             },
             {
                 id: 'docker',
                 name: 'Docker',
-                icon: '🐳',
                 description: 'Containerized deployment'
             }
         ],
@@ -254,63 +245,54 @@ function wizardApp() {
             {
                 id: 'api_docs',
                 name: 'API Documentation',
-                icon: '📚',
                 description: 'Swagger/OpenAPI documentation',
                 tool: 'swagger'
             },
             {
                 id: 'admin_panel',
                 name: 'Admin Panel',
-                icon: '⚙️',
                 description: 'Administrative dashboard',
                 tool: 'react-admin'
             },
             {
                 id: 'stripe',
                 name: 'Payments',
-                icon: '💳',
                 description: 'Stripe payment integration',
                 tool: 'stripe'
             },
             {
                 id: 'analytics',
                 name: 'Analytics',
-                icon: '📊',
                 description: 'Google Analytics integration',
                 tool: 'google-analytics'
             },
             {
                 id: 'email',
                 name: 'Email Service',
-                icon: '📧',
                 description: 'Email sending capabilities',
                 tool: 'sendgrid'
             },
             {
                 id: 'ai_integration',
                 name: 'AI/LLM Integration',
-                icon: '🤖',
                 description: 'OpenAI API integration',
                 tool: 'openai'
             },
             {
                 id: 'dark_mode',
                 name: 'Dark Mode',
-                icon: '🌙',
                 description: 'Light/dark theme toggle',
                 tool: 'theme'
             },
             {
                 id: 'i18n',
                 name: 'Internationalization',
-                icon: '🌍',
                 description: 'Multi-language support',
                 tool: 'react-i18next'
             },
             {
                 id: 'pwa',
                 name: 'Progressive Web App',
-                icon: '📱',
                 description: 'PWA configuration',
                 tool: 'workbox'
             }
@@ -337,6 +319,56 @@ function wizardApp() {
         selectFrontendFramework(framework) {
             this.config.frontend.framework = framework;
             this.config.frontend.ui_libraries = []; // Reset UI libraries
+            
+            // Filter UI libraries based on selected framework
+            this.filterUILibraries();
+        },
+        
+        filterUILibraries() {
+            const framework = this.config.frontend.framework;
+            
+            this.uiLibraries.forEach(library => {
+                library.hidden = false;
+                library.recommended = false;
+                
+                if (framework === 'react') {
+                    // Hide Vue/Angular specific libraries
+                    if (['vuetify', 'quasar', 'primeng'].includes(library.id)) {
+                        library.hidden = true;
+                    }
+                    // Highlight recommended for React
+                    if (['tailwindcss', 'shadcn'].includes(library.id)) {
+                        library.recommended = true;
+                    }
+                } else if (framework === 'vue') {
+                    // Hide React specific libraries
+                    if (['shadcn', 'chakra'].includes(library.id)) {
+                        library.hidden = true;
+                    }
+                    // Highlight recommended for Vue
+                    if (['tailwindcss', 'vuetify'].includes(library.id)) {
+                        library.recommended = true;
+                    }
+                } else if (framework === 'svelte') {
+                    // Hide framework-specific libraries
+                    if (['shadcn', 'chakra', 'vuetify', 'mui'].includes(library.id)) {
+                        library.hidden = true;
+                    }
+                    // Highlight recommended for Svelte
+                    if (['tailwindcss'].includes(library.id)) {
+                        library.recommended = true;
+                    }
+                } else if (framework === 'angular') {
+                    // Hide non-Angular libraries
+                    if (['shadcn', 'chakra', 'vuetify'].includes(library.id)) {
+                        library.hidden = true;
+                    }
+                    // Highlight recommended for Angular
+                    if (['mui', 'tailwindcss'].includes(library.id)) {
+                        library.recommended = true;
+                    }
+                }
+            });
         },
 
         toggleUILibrary(library) {
@@ -352,6 +384,54 @@ function wizardApp() {
         selectBackend(backend) {
             this.config.backend.language = backend.language;
             this.config.backend.framework = backend.framework;
+            
+            // Filter ORMs based on backend language
+            this.filterORMs();
+        },
+        
+        filterORMs() {
+            const language = this.config.backend.language;
+            const hasDatabase = this.config.database.engines.length > 0 && !this.config.database.engines.includes('none');
+            
+            this.ormOptions.forEach(orm => {
+                orm.hidden = false;
+                orm.recommended = false;
+                
+                // Hide all ORMs if no database selected
+                if (!hasDatabase) {
+                    orm.hidden = true;
+                    return;
+                }
+                
+                if (language === 'node') {
+                    // Hide non-JS ORMs
+                    if (['sqlalchemy', 'gorm', 'diesel'].includes(orm.id)) {
+                        orm.hidden = true;
+                    }
+                    // Highlight recommended for Node.js
+                    if (['prisma'].includes(orm.id)) {
+                        orm.recommended = true;
+                    }
+                } else if (language === 'python') {
+                    // Hide non-Python ORMs
+                    if (['prisma', 'typeorm', 'sequelize', 'gorm'].includes(orm.id)) {
+                        orm.hidden = true;
+                    }
+                    // Highlight recommended for Python
+                    if (['sqlalchemy'].includes(orm.id)) {
+                        orm.recommended = true;
+                    }
+                } else if (language === 'go') {
+                    // Hide non-Go ORMs
+                    if (['prisma', 'typeorm', 'sqlalchemy', 'mongoose'].includes(orm.id)) {
+                        orm.hidden = true;
+                    }
+                    // Highlight recommended for Go
+                    if (['gorm'].includes(orm.id)) {
+                        orm.recommended = true;
+                    }
+                }
+            });
         },
 
         toggleDatabase(db) {
@@ -371,6 +451,12 @@ function wizardApp() {
                 const noneIndex = engines.indexOf('none');
                 engines.splice(noneIndex, 1);
             }
+            
+            // Filter ORMs and auth providers based on database selection
+            setTimeout(() => {
+                this.filterORMs();
+                this.filterAuthProviders();
+            }, 50);
         },
 
         selectORM(orm) {
@@ -382,6 +468,45 @@ function wizardApp() {
             if (provider === 'none') {
                 this.config.auth.include_ui = false;
             }
+        },
+        
+        filterAuthProviders() {
+            const hasDatabase = this.config.database.engines.length > 0 && !this.config.database.engines.includes('none');
+            const databaseEngine = this.config.database.engines[0];
+            
+            this.authProviders.forEach(auth => {
+                auth.hidden = false;
+                auth.recommended = false;
+                
+                if (!hasDatabase) {
+                    // Without database, hide database-dependent auth
+                    if (['supabase', 'custom-db'].includes(auth.id)) {
+                        auth.hidden = true;
+                    }
+                    // Highlight recommended for no-database setups
+                    if (['auth0', 'clerk'].includes(auth.id)) {
+                        auth.recommended = true;
+                    }
+                } else {
+                    // With database, show all options
+                    if (databaseEngine === 'supabase') {
+                        // Highlight Supabase auth for Supabase database
+                        if (auth.id === 'supabase') {
+                            auth.recommended = true;
+                        }
+                    } else if (databaseEngine === 'firebase') {
+                        // Highlight Firebase auth for Firebase database
+                        if (auth.id === 'firebase') {
+                            auth.recommended = true;
+                        }
+                    } else {
+                        // For other databases, highlight flexible options
+                        if (['auth0', 'jwt'].includes(auth.id)) {
+                            auth.recommended = true;
+                        }
+                    }
+                }
+            });
         },
 
         toggleDeploymentPlatform(platform) {

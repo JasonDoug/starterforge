@@ -1,0 +1,67 @@
+name: Question
+description: Ask a question about StarterForge usage
+title: "[Question]: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a question about using StarterForge? We're here to help!
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      description: What would you like to know?
+      placeholder: Ask your question here
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Question Category
+      description: What is your question about?
+      options:
+        - Installation/Setup
+        - CLI Usage
+        - Web Interface
+        - Configuration
+        - Generated Code
+        - Framework/Technology Support
+        - Deployment
+        - Troubleshooting
+        - General Usage
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Provide any relevant context or background
+      placeholder: |
+        - What are you trying to achieve?
+        - What have you already tried?
+        - Any specific constraints or requirements?
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment (if relevant)
+      description: Your environment details
+      placeholder: |
+        - OS: [e.g. macOS, Windows, Linux]
+        - Node.js version: [e.g. 20.10.0]
+        - StarterForge version: [e.g. 1.1.0]
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Documentation Check
+      description: Before asking, please confirm
+      options:
+        - label: I have checked the README.md
+        - label: I have checked the CLI-USAGE.md documentation
+        - label: I have searched existing issues for similar questions

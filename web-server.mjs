@@ -28,16 +28,17 @@ app.post('/api/generate', async (req, res) => {
         // Validate configuration
         const config = StarterForgeConfigSchema.parse(req.body);
         
-        // Generate unique filename for this request
+        // Generate unique timestamp for this request
         const timestamp = Date.now();
+        const dateStr = new Date(timestamp).toISOString().replace(/[:.]/g, '-').slice(0, -5); // 2024-01-01T12-30-45
         const configFileName = `temp-config-${timestamp}.json`;
         const configFilePath = path.join(__dirname, configFileName);
         
         // Write config to temporary file
         fs.writeFileSync(configFilePath, JSON.stringify(config, null, 2));
         
-        // Run the CLI tool
-        const cliProcess = spawn('node', ['starterforge-cli.mjs', configFileName], {
+        // Run the CLI tool with timestamped output directory
+        const cliProcess = spawn('node', ['starterforge-cli.mjs', configFileName, '--output-dir', `output/${dateStr}`], {
             cwd: __dirname,
             stdio: 'pipe'
         });
@@ -65,7 +66,7 @@ app.post('/api/generate', async (req, res) => {
             
             if (code === 0) {
                 // Success - find the generated output directory
-                const outputDir = path.join(__dirname, 'output', config.project_type);
+                const outputDir = path.join(__dirname, 'output', dateStr, config.project_type);
                 
                 if (fs.existsSync(outputDir)) {
                     console.log('✅ Project generated successfully at:', outputDir);
@@ -74,8 +75,9 @@ app.post('/api/generate', async (req, res) => {
                     // In production, you'd want to create a zip file and return download URL
                     res.json({
                         success: true,
-                        message: `Project generated successfully at: ${outputDir}\\n\\nYou can find your files in the output directory.`,
+                        message: `Project generated successfully!\\n\\nGenerated at: ${dateStr}\\nProject Type: ${config.project_type}\\n\\nFiles are organized in timestamped directories to avoid conflicts.`,
                         outputPath: outputDir,
+                        timestamp: dateStr,
                         files: getDirectoryStructure(outputDir)
                     });
                 } else {
@@ -128,21 +130,89 @@ app.post('/api/generate', async (req, res) => {
     }
 });
 
-// API endpoint to get project structure preview
+// API endpoint to get project structure preview (latest generation)
 app.get('/api/preview/:projectType', (req, res) => {
     const { projectType } = req.params;
-    const outputDir = path.join(__dirname, 'output', projectType);
+    const outputBaseDir = path.join(__dirname, 'output');
     
-    if (fs.existsSync(outputDir)) {
-        const structure = getDirectoryStructure(outputDir);
-        res.json({
-            success: true,
-            structure: structure
+    if (!fs.existsSync(outputBaseDir)) {
+        return res.status(404).json({
+            success: false,
+            error: 'No projects generated yet'
         });
-    } else {
+    }
+    
+    // Find the most recent generation
+    try {
+        const timestamps = fs.readdirSync(outputBaseDir, { withFileTypes: true })
+            .filter(item => item.isDirectory())
+            .map(item => item.name)
+            .sort()
+            .reverse(); // Most recent first
+        
+        for (const timestamp of timestamps) {
+            const outputDir = path.join(outputBaseDir, timestamp, projectType);
+            if (fs.existsSync(outputDir)) {
+                const structure = getDirectoryStructure(outputDir);
+                return res.json({
+                    success: true,
+                    structure: structure,
+                    timestamp: timestamp
+                });
+            }
+        }
+        
         res.status(404).json({
             success: false,
-            error: 'Project not found'
+            error: `No ${projectType} projects found`
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            error: 'Error reading output directory',
+            details: err.message
+        });
+    }
+});
+
+// API endpoint to list all generations
+app.get('/api/generations', (req, res) => {
+    const outputBaseDir = path.join(__dirname, 'output');
+    
+    if (!fs.existsSync(outputBaseDir)) {
+        return res.json({
+            success: true,
+            generations: []
+        });
+    }
+    
+    try {
+        const generations = fs.readdirSync(outputBaseDir, { withFileTypes: true })
+            .filter(item => item.isDirectory())
+            .map(item => {
+                const timestamp = item.name;
+                const timestampDir = path.join(outputBaseDir, timestamp);
+                const projectTypes = fs.readdirSync(timestampDir, { withFileTypes: true })
+                    .filter(subItem => subItem.isDirectory())
+                    .map(subItem => subItem.name);
+                
+                return {
+                    timestamp,
+                    date: new Date(timestamp.replace(/-/g, ':').replace('T', 'T') + 'Z').toLocaleString(),
+                    projectTypes
+                };
+            })
+            .sort((a, b) => b.timestamp.localeCompare(a.timestamp)); // Most recent first
+        
+        res.json({
+            success: true,
+            generations
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            error: 'Error reading generations',
+            details: err.message
         });
     }
 });

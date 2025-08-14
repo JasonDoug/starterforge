@@ -2,6 +2,25 @@
 
 import { Command } from 'commander';
 import { StarterForgeConfigSchema } from './starterforge.config.schema.js';
+import { 
+  projectTypes, 
+  frontendFrameworks, 
+  backendOptions, 
+  databases, 
+  ormOptions, 
+  authProviders, 
+  deploymentPlatforms, 
+  optionalFeatures,
+  createDefaultConfig,
+  filterUILibraries,
+  filterORMs,
+  filterAuthProviders,
+  canProceedFromStep,
+  getNextStep,
+  getPreviousStep,
+  stepTitles
+} from './wizard-logic.js';
+import { input, select, checkbox, confirm } from '@inquirer/prompts';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -16,7 +35,7 @@ function loadConfig(filePath) {
     const config = StarterForgeConfigSchema.parse(configJson);
     return config;
   } catch (err) {
-    console.error("❌ Failed to load or validate config:", err.message);
+    console.error("Failed to load or validate config:", err.message);
     process.exit(1);
   }
 }
@@ -189,8 +208,8 @@ function generateScriptLines(config, baseDir) {
   return lines;
 }
 
-function scaffoldProject(config, mode) {
-  const baseDir = path.join(__dirname, 'output', config.project_type);
+function scaffoldProject(config, mode, outputDir = 'output') {
+  const baseDir = path.join(__dirname, outputDir, config.project_type);
   const scriptLines = generateScriptLines(config, baseDir);
   const scriptPath = path.join(baseDir, 'scaffold.sh');
 
@@ -224,13 +243,13 @@ function scaffoldProject(config, mode) {
       generateAuthFiles(config, baseDir);
     }
 
-    console.log("✅ Files scaffolded in:", baseDir);
+    console.log("Files scaffolded in:", baseDir);
   }
 
   if (mode !== 'scaffold-only') {
     writeFileSafe(scriptPath, scriptLines.join("\n"));
     fs.chmodSync(scriptPath, 0o755);
-    console.log("📜 Script saved as:", scriptPath);
+    console.log("Script saved as:", scriptPath);
   }
 }
 
@@ -604,14 +623,404 @@ module.exports = { requireAuth };
 `);
 }
 
+// Interactive wizard implementation
+async function runInteractiveWizard() {
+  const config = createDefaultConfig();
+  
+  try {
+    // Step 1: Project Type
+    console.log(`\nStep 1/8: ${stepTitles[0]}`);
+    const projectType = await select({
+      message: 'What type of project are you building?',
+      choices: projectTypes.map(type => ({
+        name: type.name,
+        value: type.id,
+        description: type.description
+      }))
+    });
+    config.project_type = projectType;
+    
+    // Step 2: Frontend (skip for backend-only projects)
+    if (!['backend_only', 'cli_tool'].includes(projectType)) {
+      console.log(`\nStep 2/8: ${stepTitles[1]}`);
+      const frontend = await select({
+        message: 'Choose your frontend framework:',
+        choices: frontendFrameworks.map(fw => ({
+          name: fw.name,
+          value: fw.id
+        }))
+      });
+      config.frontend.framework = frontend;
+      
+      // UI Libraries (if frontend selected)
+      if (frontend !== 'none') {
+        const filteredLibraries = filterUILibraries(frontend);
+        const availableLibraries = filteredLibraries.filter(lib => !lib.hidden);
+        
+        if (availableLibraries.length > 0) {
+          const uiLibs = await checkbox({
+            message: 'Select UI libraries (optional):',
+            choices: availableLibraries.map(lib => ({
+              name: `${lib.name}${lib.recommended ? '  Recommended' : ''}`,
+              value: lib.id,
+              checked: lib.recommended
+            }))
+          });
+          config.frontend.ui_libraries = uiLibs;
+        }
+      }
+    }
+    
+    // Step 3: Backend
+    console.log(`\nStep 3/8: ${stepTitles[2]}`);
+    const backend = await select({
+      message: 'Choose your backend technology:',
+      choices: backendOptions.map(backend => ({
+        name: backend.name,
+        value: backend.id,
+        description: backend.description
+      }))
+    });
+    
+    const selectedBackend = backendOptions.find(b => b.id === backend);
+    config.backend.language = selectedBackend.language;
+    config.backend.framework = selectedBackend.framework;
+    
+    // Step 4: Database
+    console.log(`\nStep 4/8: ${stepTitles[3]}`);
+    const dbEngines = await checkbox({
+      message: 'Select database engines:',
+      choices: databases.map(db => ({
+        name: db.name,
+        value: db.id
+      }))
+    });
+    config.database.engines = dbEngines;
+    
+    // ORM Selection (if database selected)
+    if (dbEngines.length > 0 && !dbEngines.includes('none')) {
+      const filteredORMs = filterORMs(selectedBackend.language, dbEngines);
+      const availableORMs = filteredORMs.filter(orm => !orm.hidden);
+      
+      if (availableORMs.length > 0) {
+        const orm = await select({
+          message: 'Choose an ORM:',
+          choices: [
+            { name: 'Skip ORM', value: '' },
+            ...availableORMs.map(orm => ({
+              name: `${orm.name}${orm.recommended ? '  Recommended' : ''}`,
+              value: orm.id
+            }))
+          ]
+        });
+        config.database.orm = orm;
+      }
+    }
+    
+    // Step 5: Authentication
+    console.log(`\nStep 5/8: ${stepTitles[4]}`);
+    const filteredAuth = filterAuthProviders(dbEngines);
+    const availableAuth = filteredAuth.filter(auth => !auth.hidden);
+    
+    const authProvider = await select({
+      message: 'Choose authentication provider:',
+      choices: availableAuth.map(auth => ({
+        name: `${auth.name}${auth.recommended ? '  Recommended' : ''}`,
+        value: auth.id,
+        description: auth.description
+      }))
+    });
+    config.auth.provider = authProvider;
+    
+    // Include UI for auth
+    if (authProvider !== 'none') {
+      const includeUI = await confirm({
+        message: 'Include pre-built UI components (login forms, buttons)?',
+        default: true
+      });
+      config.auth.include_ui = includeUI;
+    }
+    
+    // Step 6: Deployment
+    console.log(`\nStep 6/8: ${stepTitles[5]}`);
+    const deploymentTargets = await checkbox({
+      message: 'Select deployment platforms (optional):',
+      choices: deploymentPlatforms.map(platform => ({
+        name: platform.name,
+        value: platform.id,
+        description: platform.description
+      }))
+    });
+    config.devops.deployment_targets = deploymentTargets;
+    
+    // CI/CD and Docker options
+    if (deploymentTargets.length > 0) {
+      const cicd = await confirm({
+        message: 'Include GitHub Actions CI/CD pipeline?',
+        default: false
+      });
+      config.devops.ci_cd = cicd;
+      
+      const docker = await confirm({
+        message: 'Include Docker configuration?',
+        default: false
+      });
+      config.devops.docker.enabled = docker;
+      
+      if (docker) {
+        const compose = await confirm({
+          message: 'Include Docker Compose for development?',
+          default: true
+        });
+        config.devops.docker.compose = compose;
+      }
+    }
+    
+    // Step 7: Optional Features
+    console.log(`\nStep 7/8: ${stepTitles[6]}`);
+    const features = await checkbox({
+      message: 'Select optional features:',
+      choices: optionalFeatures.map(feature => ({
+        name: feature.name,
+        value: feature.id,
+        description: feature.description
+      }))
+    });
+    
+    config.optional_features = features.map(featureId => {
+      const feature = optionalFeatures.find(f => f.id === featureId);
+      return {
+        feature: featureId,
+        tool: feature.tool,
+        include_demo: false
+      };
+    });
+    
+    // Step 8: Final confirmation
+    console.log(`\nStep 8/8: ${stepTitles[7]}`);
+    console.log("Configuration complete! Here's what we'll generate:");
+    console.log(`   Project Type: ${config.project_type}`);
+    if (config.frontend.framework) {
+      console.log(`   Frontend: ${config.frontend.framework} ${config.frontend.ui_libraries.length ? `+ ${config.frontend.ui_libraries.join(', ')}` : ''}`);
+    }
+    console.log(`   Backend: ${config.backend.language} + ${config.backend.framework}`);
+    if (config.database.engines.length > 0) {
+      console.log(`   Database: ${config.database.engines.join(', ')}${config.database.orm ? ` + ${config.database.orm}` : ''}`);
+    }
+    console.log(`   Auth: ${config.auth.provider}`);
+    if (config.devops.deployment_targets.length > 0) {
+      console.log(`   Deployment: ${config.devops.deployment_targets.join(', ')}`);
+    }
+    if (config.optional_features.length > 0) {
+      console.log(`   Features: ${config.optional_features.map(f => f.feature).join(', ')}`);
+    }
+    
+    const proceed = await confirm({
+      message: 'Generate this project?',
+      default: true
+    });
+    
+    if (!proceed) {
+      console.log("Project generation cancelled.");
+      process.exit(0);
+    }
+    
+    return config;
+    
+  } catch (error) {
+    if (error.name === 'ExitPromptError') {
+      console.log("\nWizard cancelled by user.");
+      process.exit(0);
+    }
+    throw error;
+  }
+}
+
+// Configure main program
 program
   .name("starterforge")
-  .description("CLI to generate starter templates")
-  .argument("<config>", "Path to config JSON file")
+  .description("The Ultimate Project Scaffold Generator")
+  .version("1.0.0");
+
+// Generate command (from config file)
+program
+  .command("generate")
+  .description("Generate project from configuration file")
+  .option("--config <path>", "Path to config JSON file")
   .option("--mode <mode>", "Choose output mode: scaffold-only | script-only | all", "all")
-  .action((configPath, options) => {
-    const config = loadConfig(configPath);
-    scaffoldProject(config, options.mode);
+  .option("--output-dir <dir>", "Custom output directory", "output")
+  .action(async (options) => {
+    if (!options.config) {
+      console.error("Config file path is required. Use --config <path>");
+      process.exit(1);
+    }
+    
+    try {
+      const config = loadConfig(options.config);
+      console.log(`Generating ${config.project_type} project...`);
+      await scaffoldProject(config, options.mode, options.outputDir);
+      console.log("Project generated successfully!");
+    } catch (error) {
+      console.error("Generation failed:", error.message);
+      process.exit(1);
+    }
   });
 
-program.parse();
+// Interactive create command
+program
+  .command("create")
+  .description("Create project with interactive wizard")
+  .option("--interactive", "Launch interactive 8-step wizard", true)
+  .option("--output-dir <dir>", "Custom output directory", "output")
+  .action(async (options) => {
+    try {
+      console.log("Welcome to StarterForge Interactive Wizard!");
+      console.log("Let's build your perfect project scaffold in 8 steps.\n");
+      
+      const config = await runInteractiveWizard();
+      
+      console.log("\nGenerating your project...");
+      await scaffoldProject(config, "all", options.outputDir);
+      console.log("Project generated successfully!");
+      
+      // Show summary
+      console.log("\nProject Summary:");
+      console.log(`   Type: ${config.project_type}`);
+      if (config.frontend?.framework) {
+        console.log(`   Frontend: ${config.frontend.framework}`);
+      }
+      if (config.backend?.language) {
+        console.log(`   Backend: ${config.backend.language} + ${config.backend.framework}`);
+      }
+      if (config.database?.engines?.length > 0) {
+        console.log(`   Database: ${config.database.engines.join(', ')}`);
+      }
+      
+    } catch (error) {
+      console.error("Wizard failed:", error.message);
+      process.exit(1);
+    }
+  });
+
+// List command for exploring options
+const listCommand = program
+  .command("list")
+  .description("List available options");
+
+listCommand
+  .command("frameworks")
+  .description("List available frontend frameworks")
+  .action(() => {
+    console.log("Available Frontend Frameworks:");
+    frontendFrameworks.forEach(fw => {
+      console.log(`   ${fw.name} (${fw.id})`);
+    });
+  });
+
+listCommand
+  .command("databases")
+  .description("List available database engines")
+  .action(() => {
+    console.log("Available Databases:");
+    databases.forEach(db => {
+      console.log(`   ${db.name} (${db.id})`);
+    });
+  });
+
+listCommand
+  .command("backends")
+  .description("List available backend options")
+  .action(() => {
+    console.log("Available Backend Options:");
+    backendOptions.forEach(backend => {
+      console.log(`   ${backend.name} - ${backend.description}`);
+    });
+  });
+
+listCommand
+  .command("auth")
+  .description("List available authentication providers")
+  .action(() => {
+    console.log("Available Auth Providers:");
+    authProviders.forEach(auth => {
+      console.log(`   ${auth.name} - ${auth.description}`);
+    });
+  });
+
+listCommand
+  .command("types")
+  .description("List available project types")
+  .action(() => {
+    console.log("Available Project Types:");
+    projectTypes.forEach(type => {
+      console.log(`   ${type.name} - ${type.description}`);
+    });
+  });
+
+// Web command to start the web wizard
+program
+  .command("web")
+  .description("Start the web wizard interface")
+  .option("-p, --port <port>", "Port to run the web server on", "3001")
+  .action(async (options) => {
+    try {
+      // Import and start the web server
+      const { spawn } = await import('child_process');
+      const webServerPath = path.join(__dirname, 'web-server.mjs');
+      
+      console.log(`Starting StarterForge web wizard on port ${options.port}...`);
+      console.log(`Open your browser to: http://localhost:${options.port}`);
+      
+      const serverProcess = spawn('node', [webServerPath], {
+        stdio: 'inherit',
+        env: { ...process.env, PORT: options.port }
+      });
+      
+      // Handle process termination
+      process.on('SIGINT', () => {
+        console.log('\nShutting down web server...');
+        serverProcess.kill('SIGINT');
+        process.exit(0);
+      });
+      
+      serverProcess.on('error', (error) => {
+        console.error('Failed to start web server:', error.message);
+        process.exit(1);
+      });
+      
+    } catch (error) {
+      console.error('Failed to start web wizard:', error.message);
+      console.error('Make sure you have the complete StarterForge package installed.');
+      process.exit(1);
+    }
+  });
+
+// For backwards compatibility - support old direct config file usage
+const args = process.argv.slice(2);
+if (args.length > 0 && !args[0].startsWith('-') && !['generate', 'create', 'list', 'web', 'help'].includes(args[0])) {
+  // Legacy mode: starterforge config.json [--mode mode] [--output-dir dir]
+  const configPath = args[0];
+  let mode = "all";
+  let outputDir = "output";
+  
+  // Parse legacy options
+  for (let i = 1; i < args.length; i += 2) {
+    if (args[i] === '--mode') {
+      mode = args[i + 1] || "all";
+    } else if (args[i] === '--output-dir') {
+      outputDir = args[i + 1] || "output";
+    }
+  }
+  
+  try {
+    const config = loadConfig(configPath);
+    console.log(`Generating ${config.project_type} project from config file...`);
+    await scaffoldProject(config, mode, outputDir);
+    console.log("Project generated successfully!");
+  } catch (error) {
+    console.error("Generation failed:", error.message);
+    process.exit(1);
+  }
+} else {
+  program.parse();
+}
