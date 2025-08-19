@@ -1,11 +1,11 @@
-# 📦 StarterForge – Requirements Specification
+# StarterForge – Requirements Specification
 
-## 🎯 Product Goal
+## Product Goal
 Create a web-based tool that guides users through building a customized starter project template via a step-by-step wizard interface. At the end, the user receives a downloadable or GitHub-pushable starter project scaffold based on their selections.
 
 ---
 
-## 🪄 Wizard Flow Overview
+## Wizard Flow Overview
 
 1. Project Type Selection
 2. Frontend Tech Selection
@@ -18,7 +18,7 @@ Create a web-based tool that guides users through building a customized starter 
 
 ---
 
-## 🧩 Step 1 – Project Type Selection
+## Step 1 – Project Type Selection
 
 - Let users choose one:
   - Web App (Full Stack)
@@ -38,7 +38,7 @@ Create a web-based tool that guides users through building a customized starter 
 
 ---
 
-## 🎨 Step 2 – Frontend Tech Selection
+## Step 2 – Frontend Tech Selection
 
 - Shown if applicable
 - Choose one:
@@ -52,7 +52,7 @@ Create a web-based tool that guides users through building a customized starter 
 
 ---
 
-## 🧠 Step 3 – Backend Tech Selection
+## Step 3 – Backend Tech Selection
 
 - Shown if applicable
 - Choose runtime + framework:
@@ -66,7 +66,7 @@ Create a web-based tool that guides users through building a customized starter 
 
 ---
 
-## 🗄️ Step 4 – Database & Storage Options
+## Step 4 – Database & Storage Options
 
 - Choose one or more:
   - SQLite, PostgreSQL, MySQL, MongoDB, Redis, Firebase, Supabase
@@ -80,7 +80,7 @@ Create a web-based tool that guides users through building a customized starter 
 
 ---
 
-## 🔐 Step 5 – Auth & User System
+## Step 5 – Auth & User System
 
 - Options:
   - None, Email/Password, OAuth, Clerk, Auth0, Firebase
@@ -93,7 +93,7 @@ Create a web-based tool that guides users through building a customized starter 
 
 ---
 
-## 🚀 Step 6 – Deployment & DevOps
+## Step 6 – Deployment & DevOps
 
 - Choose deployment target(s):
   - Vercel, Netlify, Railway, Docker, AWS, etc.
@@ -107,7 +107,7 @@ Create a web-based tool that guides users through building a customized starter 
 
 ---
 
-## 🧩 Step 7 – Optional Features
+## Step 7 – Optional Features
 
 - Multi-select from:
   - API Docs, Admin Panel, Dark Mode, Stripe, Analytics, CMS, i18n, Email service, AI/LLM starter, etc.
@@ -119,7 +119,7 @@ Create a web-based tool that guides users through building a customized starter 
 
 ---
 
-## 📦 Step 8 – Output Preferences
+## Step 8 – Output Preferences
 
 - Choose:
   - Download zip, Push to GitHub, Open in StackBlitz, etc.

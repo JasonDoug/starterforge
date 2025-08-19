@@ -61,6 +61,7 @@ build/Release
 
 # Generated output directories
 output/
+test-output/
 dist/
 build/
 
@@ -70,8 +71,9 @@ tmp/
 *.tmp
 *.temp
 
-# Test configuration files (keep test-*.json for examples)
+# Test configuration files (keep for development, exclude temporary ones)
 temp-config-*.json
+# Note: test fixtures are now in tests/fixtures/ and tracked in git
 
 # IDE and Editor files
 .vscode/

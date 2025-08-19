@@ -55,7 +55,6 @@
                             <div class="border rounded-lg p-6 cursor-pointer transition-all hover:border-blue-500"
                                  :class="config.project_type === projectType.id ? 'border-blue-500 bg-blue-50' : 'border-gray-200'"
                                  @click="selectProjectType(projectType.id)">
-                                <div class="text-2xl mb-3" x-text="projectType.icon"></div>
                                 <h3 class="font-semibold text-gray-900 mb-2" x-text="projectType.name"></h3>
                                 <p class="text-sm text-gray-600" x-text="projectType.description"></p>
                             </div>
@@ -76,7 +75,6 @@
                                     <div class="border rounded-lg p-4 cursor-pointer transition-all hover:border-blue-500 text-center"
                                          :class="config.frontend.framework === framework.id ? 'border-blue-500 bg-blue-50' : 'border-gray-200'"
                                          @click="selectFrontendFramework(framework.id)">
-                                        <div class="text-xl mb-2" x-text="framework.icon"></div>
                                         <div class="font-medium text-sm" x-text="framework.name"></div>
                                     </div>
                                 </template>
@@ -87,10 +85,16 @@
                             <h3 class="text-lg font-semibold mb-4">UI Libraries</h3>
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
                                 <template x-for="library in uiLibraries" :key="library.id">
-                                    <div class="border rounded-lg p-4 cursor-pointer transition-all hover:border-blue-500 text-center"
-                                         :class="config.frontend.ui_libraries.includes(library.id) ? 'border-blue-500 bg-blue-50' : 'border-gray-200'"
+                                    <div x-show="!library.hidden"
+                                         class="relative border rounded-lg p-4 cursor-pointer transition-all hover:border-blue-500 text-center"
+                                         :class="[
+                                             config.frontend.ui_libraries.includes(library.id) ? 'border-blue-500 bg-blue-50' : 
+                                             library.recommended ? 'border-green-500 bg-green-50' : 'border-gray-200'
+                                         ]"
                                          @click="toggleUILibrary(library.id)">
-                                        <div class="text-lg mb-2" x-text="library.icon"></div>
+                                        <div x-show="library.recommended" class="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+                                            Recommended
+                                        </div>
                                         <div class="font-medium text-sm" x-text="library.name"></div>
                                     </div>
                                 </template>
@@ -113,7 +117,6 @@
                                          :class="config.backend.language === backend.language && config.backend.framework === backend.framework ? 'border-blue-500 bg-blue-50' : 'border-gray-200'"
                                          @click="selectBackend(backend)">
                                         <div class="flex items-center space-x-3">
-                                            <div class="text-2xl" x-text="backend.icon"></div>
                                             <div>
                                                 <h4 class="font-semibold" x-text="backend.name"></h4>
                                                 <p class="text-sm text-gray-600" x-text="backend.description"></p>
@@ -139,20 +142,26 @@
                                     <div class="border rounded-lg p-4 cursor-pointer transition-all hover:border-blue-500 text-center"
                                          :class="config.database.engines.includes(db.id) ? 'border-blue-500 bg-blue-50' : 'border-gray-200'"
                                          @click="toggleDatabase(db.id)">
-                                        <div class="text-xl mb-2" x-text="db.icon"></div>
                                         <div class="font-medium text-sm" x-text="db.name"></div>
                                     </div>
                                 </template>
                             </div>
                         </div>
 
-                        <div x-show="config.database.engines.length > 0">
+                        <div x-show="config.database.engines.length > 0 && !config.database.engines.includes('none')">
                             <h3 class="text-lg font-semibold mb-4">ORM</h3>
                             <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
                                 <template x-for="orm in ormOptions" :key="orm.id">
-                                    <div class="border rounded-lg p-4 cursor-pointer transition-all hover:border-blue-500 text-center"
-                                         :class="config.database.orm === orm.id ? 'border-blue-500 bg-blue-50' : 'border-gray-200'"
+                                    <div x-show="!orm.hidden"
+                                         class="relative border rounded-lg p-4 cursor-pointer transition-all hover:border-blue-500 text-center"
+                                         :class="[
+                                             config.database.orm === orm.id ? 'border-blue-500 bg-blue-50' : 
+                                             orm.recommended ? 'border-green-500 bg-green-50' : 'border-gray-200'
+                                         ]"
                                          @click="selectORM(orm.id)">
+                                        <div x-show="orm.recommended" class="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+                                            Recommended
+                                        </div>
                                         <div class="font-medium text-sm" x-text="orm.name"></div>
                                     </div>
                                 </template>
@@ -169,11 +178,17 @@
                     <div class="space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <template x-for="auth in authProviders" :key="auth.id">
-                                <div class="border rounded-lg p-4 cursor-pointer transition-all hover:border-blue-500"
-                                     :class="config.auth.provider === auth.id ? 'border-blue-500 bg-blue-50' : 'border-gray-200'"
+                                <div x-show="!auth.hidden"
+                                     class="relative border rounded-lg p-4 cursor-pointer transition-all hover:border-blue-500"
+                                     :class="[
+                                         config.auth.provider === auth.id ? 'border-blue-500 bg-blue-50' : 
+                                         auth.recommended ? 'border-green-500 bg-green-50' : 'border-gray-200'
+                                     ]"
                                      @click="selectAuthProvider(auth.id)">
+                                    <div x-show="auth.recommended" class="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+                                        Recommended
+                                    </div>
                                     <div class="flex items-center space-x-3">
-                                        <div class="text-xl" x-text="auth.icon"></div>
                                         <div>
                                             <h4 class="font-semibold" x-text="auth.name"></h4>
                                             <p class="text-sm text-gray-600" x-text="auth.description"></p>
@@ -206,7 +221,6 @@
                                          :class="config.devops.deployment_targets.includes(platform.id) ? 'border-blue-500 bg-blue-50' : 'border-gray-200'"
                                          @click="toggleDeploymentPlatform(platform.id)">
                                         <div class="flex items-center space-x-3">
-                                            <div class="text-xl" x-text="platform.icon"></div>
                                             <div>
                                                 <h4 class="font-semibold" x-text="platform.name"></h4>
                                                 <p class="text-sm text-gray-600" x-text="platform.description"></p>
@@ -248,7 +262,6 @@
                                  :class="isFeatureSelected(feature.id) ? 'border-blue-500 bg-blue-50' : 'border-gray-200'"
                                  @click="toggleOptionalFeature(feature)">
                                 <div class="text-center">
-                                    <div class="text-2xl mb-2" x-text="feature.icon"></div>
                                     <h3 class="font-semibold text-gray-900 mb-1" x-text="feature.name"></h3>
                                     <p class="text-sm text-gray-600" x-text="feature.description"></p>
                                 </div>
@@ -295,7 +308,7 @@
                     <div class="text-center">
                         <button @click="generateProject()" 
                                 class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors">
-                            🚀 Generate My Project
+                            Generate My Project
                         </button>
                         <p class="text-sm text-gray-500 mt-2">This will create your customized project scaffold</p>
                     </div>

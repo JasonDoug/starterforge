@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/JasonDoug/starterforge/blob/main/README.md
+    about: Check the documentation first for answers to common questions
+  - name: CLI Usage Guide
+    url: https://github.com/JasonDoug/starterforge/blob/main/CLI-USAGE.md
+    about: Detailed CLI usage instructions and examples

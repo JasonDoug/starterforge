@@ -1,6 +1,6 @@
 # StarterForge Testing Guide
 
-## 🧪 Recommended Testing Stack
+## Recommended Testing Stack
 
 **Primary**: **Vitest** - Fast, modern, ESM-native test runner perfect for CLI tools
 
@@ -9,16 +9,16 @@
 - **Node.js child_process** - CLI execution testing
 - **fs/path** - File system validation
 
-## 🎯 Why Vitest for StarterForge?
+## Why Vitest for StarterForge?
 
-✅ **ESM Native**: Perfect match for our `.mjs` files  
-✅ **Fast**: Instant hot-reload for test development  
-✅ **CLI Friendly**: Excellent for testing command-line tools  
-✅ **Zero Config**: Works immediately with our setup  
-✅ **Coverage**: Built-in code coverage with v8  
-✅ **Modern**: TypeScript support, great DX  
+**ESM Native**: Perfect match for our `.mjs` files  
+**Fast**: Instant hot-reload for test development  
+**CLI Friendly**: Excellent for testing command-line tools  
+**Zero Config**: Works immediately with our setup  
+**Coverage**: Built-in code coverage with v8  
+**Modern**: TypeScript support, great DX  
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Installation
 ```bash
@@ -40,7 +40,7 @@ npm run test:ui
 npm run test:coverage
 ```
 
-## 🧩 Test Architecture
+## Test Architecture
 
 ### 1. **CLI Tests** (`tests/cli.test.js`)
 - Tests all CLI commands and options
@@ -63,7 +63,7 @@ npm run test:coverage
 - Validates complete workflow
 - Tests file contents and structure
 
-## 📝 Example Test Cases
+## Example Test Cases
 
 ### CLI Testing Pattern
 ```javascript
@@ -102,7 +102,7 @@ test('POST /api/generate', async () => {
 })
 ```
 
-## 🏗️ Test Configuration
+## Test Configuration
 
 ### **vitest.config.js**
 ```javascript
@@ -125,7 +125,7 @@ export default defineConfig({
 - Sets environment variables
 - Prepares test fixtures
 
-## 🎛️ Test Commands Explained
+## Test Commands Explained
 
 ### `npm test`
 Runs all tests once (CI mode)
@@ -158,7 +158,7 @@ Generates code coverage report
 # Shows which code paths are tested
 ```
 
-## 🧪 Test Categories
+## Test Categories
 
 ### **Unit Tests**
 - Individual function testing
@@ -178,7 +178,7 @@ Generates code coverage report
 - No crashes or errors
 - Quick verification
 
-## 📊 Coverage Goals
+## Coverage Goals
 
 Target coverage metrics:
 - **CLI Core**: 90%+ (critical path)
@@ -186,7 +186,7 @@ Target coverage metrics:
 - **File Generation**: 85%+ (output quality)
 - **API Endpoints**: 90%+ (web interface)
 
-## 🔍 Testing Best Practices
+## Testing Best Practices
 
 ### **Test Organization**
 - One test file per major component
@@ -212,15 +212,15 @@ Target coverage metrics:
 - Clean up resources properly
 - Mock external dependencies when possible
 
-## 🚨 Common Testing Scenarios
+## Common Testing Scenarios
 
 ### **Must Test**
-- ✅ All 6 project types generate successfully
-- ✅ All CLI modes work (`--mode` options)
-- ✅ Schema validation catches invalid configs
-- ✅ Generated files have correct content
-- ✅ Web API generates projects correctly
-- ✅ Error handling works properly
+- All 6 project types generate successfully
+- All CLI modes work (`--mode` options)
+- Schema validation catches invalid configs
+- Generated files have correct content
+- Web API generates projects correctly
+- Error handling works properly
 
 ### **Should Test**
 - Different framework combinations
@@ -235,7 +235,7 @@ Target coverage metrics:
 - Cross-platform compatibility
 - Memory usage validation
 
-## 🎉 Ready to Test!
+## Ready to Test!
 
 With this setup, you can:
 
@@ -245,4 +245,4 @@ With this setup, you can:
 4. **Track coverage** to ensure quality
 5. **Automate in CI** with simple `npm test`
 
-The testing framework will catch regressions and ensure StarterForge generates high-quality projects consistently! 🚀
+The testing framework will catch regressions and ensure StarterForge generates high-quality projects consistently!
