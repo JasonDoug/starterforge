@@ -16,44 +16,50 @@ export const projectTypes = [
     {
         id: 'web_app',
         name: 'Web Application',
+        icon: 'web-app',
         description: 'Full-stack web application with frontend and backend'
     },
     {
         id: 'frontend_only',
         name: 'Frontend Only',
+        icon: 'frontend',
         description: 'Client-side application (SPA, static site)'
     },
     {
         id: 'backend_only', 
         name: 'Backend API',
+        icon: 'api',
         description: 'REST API or GraphQL backend service'
     },
     {
         id: 'cli_tool',
         name: 'CLI Tool',
+        icon: 'terminal',
         description: 'Command-line interface application'
     },
     {
         id: 'microservice',
         name: 'Microservice',
+        icon: 'microservice',
         description: 'Small, focused service for distributed architecture'
     },
     {
         id: 'browser_extension',
         name: 'Browser Extension',
+        icon: 'browser-extension',
         description: 'Browser extension for Chrome, Firefox, etc.'
     }
 ];
 
 export const frontendFrameworks = [
-    { id: 'react', name: 'React'},
-    { id: 'vue', name: 'Vue.js'},
-    { id: 'svelte', name: 'Svelte'},
-    { id: 'angular', name: 'Angular'},
-    { id: 'nextjs', name: 'Next.js'},
-    { id: 'nuxt', name: 'Nuxt.js'},
-    { id: 'html', name: 'HTML/CSS/JS'},
-    { id: 'none', name: 'None'}
+    { id: 'react', name: 'React', icon: 'react'},
+    { id: 'vue', name: 'Vue.js', icon: 'vue'},
+    { id: 'svelte', name: 'Svelte', icon: 'svelte'},
+    { id: 'angular', name: 'Angular', icon: 'angular'},
+    { id: 'nextjs', name: 'Next.js', icon: 'nextjs'},
+    { id: 'nuxt', name: 'Nuxt.js', icon: 'nuxt'},
+    { id: 'html', name: 'HTML/CSS/JS', icon: 'html'},
+    { id: 'none', name: 'None', icon: 'none'}
 ];
 
 export const uiLibraries = [
@@ -74,6 +80,7 @@ export const backendOptions = [
         language: 'node',
         framework: 'express',
         name: 'Node.js + Express',
+        icon: 'nodejs',
         description: 'Fast, minimalist web framework for Node.js'
     },
     {
@@ -81,6 +88,7 @@ export const backendOptions = [
         language: 'node', 
         framework: 'fastify',
         name: 'Node.js + Fastify',
+        icon: 'fastify',
         description: 'Fast and low overhead web framework'
     },
     {
@@ -88,6 +96,7 @@ export const backendOptions = [
         language: 'python',
         framework: 'fastapi',
         name: 'Python + FastAPI',
+        icon: 'python',
         description: 'Modern, fast web framework for building APIs'
     },
     {
@@ -95,6 +104,7 @@ export const backendOptions = [
         language: 'python',
         framework: 'django',
         name: 'Python + Django',
+        icon: 'django',
         description: 'High-level Python web framework'
     },
     {
@@ -102,6 +112,7 @@ export const backendOptions = [
         language: 'go',
         framework: 'fiber',
         name: 'Go + Fiber',
+        icon: 'go',
         description: 'Express-inspired web framework written in Go'
     },
     {
@@ -109,32 +120,34 @@ export const backendOptions = [
         language: 'rust',
         framework: 'axum',
         name: 'Rust + Axum',
+        icon: 'rust',
         description: 'Ergonomic and modular web framework for Rust'
     }
 ];
 
 export const databases = [
-    { id: 'postgresql', name: 'PostgreSQL'},
-    { id: 'mysql', name: 'MySQL'},
-    { id: 'sqlite', name: 'SQLite'},
-    { id: 'mongodb', name: 'MongoDB'},
-    { id: 'redis', name: 'Redis'},
-    { id: 'none', name: 'None'}
+    { id: 'postgresql', name: 'PostgreSQL', icon: 'postgresql'},
+    { id: 'mysql', name: 'MySQL', icon: 'mysql'},
+    { id: 'sqlite', name: 'SQLite', icon: 'sqlite'},
+    { id: 'mongodb', name: 'MongoDB', icon: 'mongodb'},
+    { id: 'redis', name: 'Redis', icon: 'redis'},
+    { id: 'none', name: 'None', icon: 'none'}
 ];
 
 export const ormOptions = [
-    { id: 'prisma', name: 'Prisma', hidden: false, recommended: false },
-    { id: 'typeorm', name: 'TypeORM', hidden: false, recommended: false },
-    { id: 'sequelize', name: 'Sequelize', hidden: false, recommended: false },
-    { id: 'mongoose', name: 'Mongoose', hidden: false, recommended: false },
-    { id: 'sqlalchemy', name: 'SQLAlchemy', hidden: false, recommended: false },
-    { id: 'gorm', name: 'GORM', hidden: false, recommended: false }
+    { id: 'prisma', name: 'Prisma', icon: 'prisma', hidden: false, recommended: false },
+    { id: 'typeorm', name: 'TypeORM', icon: 'typeorm', hidden: false, recommended: false },
+    { id: 'sequelize', name: 'Sequelize', icon: 'sequelize', hidden: false, recommended: false },
+    { id: 'mongoose', name: 'Mongoose', icon: 'mongoose', hidden: false, recommended: false },
+    { id: 'sqlalchemy', name: 'SQLAlchemy', icon: 'sqlalchemy', hidden: false, recommended: false },
+    { id: 'gorm', name: 'GORM', icon: 'gorm', hidden: false, recommended: false }
 ];
 
 export const authProviders = [
     {
         id: 'none',
         name: 'No Authentication',
+        icon: 'none',
         description: 'Skip authentication setup',
         hidden: false,
         recommended: false
@@ -142,6 +155,7 @@ export const authProviders = [
     {
         id: 'auth0',
         name: 'Auth0',
+        icon: 'auth0',
         description: 'Complete authentication and authorization platform',
         hidden: false,
         recommended: false
@@ -149,6 +163,7 @@ export const authProviders = [
     {
         id: 'clerk',
         name: 'Clerk',
+        icon: 'clerk',
         description: 'Complete user management platform',
         hidden: false,
         recommended: false
@@ -156,6 +171,7 @@ export const authProviders = [
     {
         id: 'firebase',
         name: 'Firebase Auth',
+        icon: 'firebase',
         description: 'Google Firebase authentication service',
         hidden: false,
         recommended: false
@@ -163,6 +179,7 @@ export const authProviders = [
     {
         id: 'supabase',
         name: 'Supabase Auth',
+        icon: 'supabase',
         description: 'Open source Firebase alternative',
         hidden: false,
         recommended: false
@@ -170,6 +187,7 @@ export const authProviders = [
     {
         id: 'jwt',
         name: 'Custom JWT',
+        icon: 'jwt',
         description: 'Custom JSON Web Token implementation',
         hidden: false,
         recommended: false
@@ -180,31 +198,37 @@ export const deploymentPlatforms = [
     {
         id: 'vercel',
         name: 'Vercel',
+        icon: 'vercel',
         description: 'Frontend cloud platform with serverless functions'
     },
     {
         id: 'netlify',
         name: 'Netlify',
+        icon: 'netlify',
         description: 'All-in-one platform for modern web projects'
     },
     {
         id: 'railway',
         name: 'Railway',
+        icon: 'railway',
         description: 'Infrastructure platform for full-stack applications'
     },
     {
         id: 'render',
         name: 'Render',
+        icon: 'render',
         description: 'Cloud platform for modern applications'
     },
     {
         id: 'aws',
         name: 'AWS',
+        icon: 'aws',
         description: 'Amazon Web Services cloud platform'
     },
     {
         id: 'docker',
         name: 'Docker',
+        icon: 'docker',
         description: 'Containerized deployment'
     }
 ];
@@ -213,54 +237,63 @@ export const optionalFeatures = [
     {
         id: 'api_docs',
         name: 'API Documentation',
+        icon: 'api-docs',
         description: 'Swagger/OpenAPI documentation',
         tool: 'swagger'
     },
     {
         id: 'admin_panel',
         name: 'Admin Panel',
+        icon: 'admin-panel',
         description: 'Administrative dashboard',
         tool: 'react-admin'
     },
     {
         id: 'stripe',
         name: 'Payments',
+        icon: 'stripe',
         description: 'Stripe payment integration',
         tool: 'stripe'
     },
     {
         id: 'analytics',
         name: 'Analytics',
+        icon: 'analytics',
         description: 'Google Analytics integration',
         tool: 'google-analytics'
     },
     {
         id: 'email',
         name: 'Email Service',
+        icon: 'email',
         description: 'Email sending capabilities',
         tool: 'sendgrid'
     },
     {
         id: 'ai_integration',
         name: 'AI/LLM Integration',
+        icon: 'ai',
         description: 'OpenAI API integration',
         tool: 'openai'
     },
     {
         id: 'dark_mode',
         name: 'Dark Mode',
+        icon: 'dark-mode',
         description: 'Light/dark theme toggle',
         tool: 'theme'
     },
     {
         id: 'i18n',
         name: 'Internationalization',
+        icon: 'i18n',
         description: 'Multi-language support',
         tool: 'react-i18next'
     },
     {
         id: 'pwa',
         name: 'Progressive Web App',
+        icon: 'pwa',
         description: 'PWA configuration',
         tool: 'workbox'
     }
