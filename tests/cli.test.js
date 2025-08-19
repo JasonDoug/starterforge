@@ -101,8 +101,8 @@ describe('StarterForge CLI - New Structure', () => {
     const result = await runCLI(['generate', '--config', 'tests/fixtures/test-config.json'])
     
     expect(result.exitCode).toBe(0)
-    expect(result.stdout).toContain('🚀 Generating web_app project')
-    expect(result.stdout).toContain('✅ Project generated successfully!')
+    expect(result.stdout).toContain('Generating web_app project')
+    expect(result.stdout).toContain('Project generated successfully!')
     
     // Check files were created
     expect(existsSync('output/web_app/README.md')).toBe(true)
@@ -114,7 +114,7 @@ describe('StarterForge CLI - New Structure', () => {
     const result = await runCLI(['generate', '--config', 'tests/fixtures/test-cli.json'])
     
     expect(result.exitCode).toBe(0)
-    expect(result.stdout).toContain('🚀 Generating cli_tool project')
+    expect(result.stdout).toContain('Generating cli_tool project')
     expect(existsSync('output/cli_tool/src/cli.py')).toBe(true)
     expect(existsSync('output/cli_tool/requirements.txt')).toBe(true)
   })
@@ -123,23 +123,23 @@ describe('StarterForge CLI - New Structure', () => {
     const result = await runCLI(['generate', '--config', 'tests/fixtures/test-config.json', '--mode', 'script-only'])
     
     expect(result.exitCode).toBe(0)
-    expect(result.stdout).toContain('📜 Script saved')
-    expect(result.stdout).not.toContain('✅ Files scaffolded')
+    expect(result.stdout).toContain('Script saved')
+    expect(result.stdout).not.toContain('Files scaffolded')
   })
 
   test('handles scaffold-only mode', async () => {
     const result = await runCLI(['generate', '--config', 'tests/fixtures/test-config.json', '--mode', 'scaffold-only'])
     
     expect(result.exitCode).toBe(0)
-    expect(result.stdout).toContain('✅ Files scaffolded')
-    expect(result.stdout).not.toContain('📜 Script saved')
+    expect(result.stdout).toContain('Files scaffolded')
+    expect(result.stdout).not.toContain('Script saved')
   })
 
   test('fails with missing config file', async () => {
     const result = await runCLI(['generate'])
     
     expect(result.exitCode).toBe(1)
-    expect(result.stderr).toContain('❌ Config file path is required')
+    expect(result.stderr).toContain('Config file path is required')
   })
 
   test('fails with invalid config file', async () => {
@@ -156,47 +156,47 @@ describe('StarterForge CLI - List Commands', () => {
     const result = await runCLI(['list', 'frameworks'])
     
     expect(result.exitCode).toBe(0)
-    expect(result.stdout).toContain('🎨 Available Frontend Frameworks:')
-    expect(result.stdout).toContain('⚛️ React (react)')
-    expect(result.stdout).toContain('💚 Vue.js (vue)')
-    expect(result.stdout).toContain('🧡 Svelte (svelte)')
+    expect(result.stdout).toContain('Available Frontend Frameworks:')
+    expect(result.stdout).toContain('React (react)')
+    expect(result.stdout).toContain('Vue.js (vue)')
+    expect(result.stdout).toContain('Svelte (svelte)')
   })
 
   test('lists database engines', async () => {
     const result = await runCLI(['list', 'databases'])
     
     expect(result.exitCode).toBe(0)
-    expect(result.stdout).toContain('🗄️  Available Databases:')
-    expect(result.stdout).toContain('🐘 PostgreSQL (postgresql)')
-    expect(result.stdout).toContain('🐬 MySQL (mysql)')
-    expect(result.stdout).toContain('🍃 MongoDB (mongodb)')
+    expect(result.stdout).toContain('Available Databases:')
+    expect(result.stdout).toContain('PostgreSQL (postgresql)')
+    expect(result.stdout).toContain('MySQL (mysql)')
+    expect(result.stdout).toContain('MongoDB (mongodb)')
   })
 
   test('lists backend options', async () => {
     const result = await runCLI(['list', 'backends'])
     
     expect(result.exitCode).toBe(0)
-    expect(result.stdout).toContain('⚡ Available Backend Options:')
-    expect(result.stdout).toContain('🟢 Node.js + Express')
-    expect(result.stdout).toContain('🐍 Python + FastAPI')
+    expect(result.stdout).toContain('Available Backend Options:')
+    expect(result.stdout).toContain('Node.js + Express')
+    expect(result.stdout).toContain('Python + FastAPI')
   })
 
   test('lists auth providers', async () => {
     const result = await runCLI(['list', 'auth'])
     
     expect(result.exitCode).toBe(0)
-    expect(result.stdout).toContain('🔐 Available Auth Providers:')
-    expect(result.stdout).toContain('🔐 Auth0')
-    expect(result.stdout).toContain('👤 Clerk')
+    expect(result.stdout).toContain('Available Auth Providers:')
+    expect(result.stdout).toContain('Auth0')
+    expect(result.stdout).toContain('Clerk')
   })
 
   test('lists project types', async () => {
     const result = await runCLI(['list', 'types'])
     
     expect(result.exitCode).toBe(0)
-    expect(result.stdout).toContain('📁 Available Project Types:')
-    expect(result.stdout).toContain('🌐 Web Application')
-    expect(result.stdout).toContain('💻 Frontend Only')
+    expect(result.stdout).toContain('Available Project Types:')
+    expect(result.stdout).toContain('Web Application')
+    expect(result.stdout).toContain('Frontend Only')
   })
 })
 
@@ -206,15 +206,15 @@ describe('StarterForge CLI - Backwards Compatibility', () => {
     const result = await runCLILegacy('tests/fixtures/test-config.json')
     
     expect(result.exitCode).toBe(0)
-    expect(result.stdout).toContain('🚀 Generating web_app project from config file')
-    expect(result.stdout).toContain('✅ Project generated successfully!')
+    expect(result.stdout).toContain('Generating web_app project from config file')
+    expect(result.stdout).toContain('Project generated successfully!')
   })
 
   test('still works with legacy mode flags', async () => {
     const result = await runCLILegacy('tests/fixtures/test-config.json', ['--mode', 'script-only'])
     
     expect(result.exitCode).toBe(0)
-    expect(result.stdout).toContain('📜 Script saved')
+    expect(result.stdout).toContain('Script saved')
   })
 })
 

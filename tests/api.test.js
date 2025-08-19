@@ -21,10 +21,27 @@ describe('Web API', () => {
     })
 
     // Wait for server to start
-    await new Promise((resolve) => {
+    await new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => {
+        reject(new Error('Server start timeout'))
+      }, 10000) // 10 second timeout
+      
       serverProcess.stdout.on('data', (data) => {
         if (data.toString().includes('running at')) {
-          resolve()
+          clearTimeout(timeout)
+          // Give the server a moment to fully initialize
+          setTimeout(resolve, 1000)
+        }
+      })
+      
+      serverProcess.stderr.on('data', (data) => {
+        console.error('Server error:', data.toString())
+      })
+      
+      serverProcess.on('exit', (code) => {
+        if (code !== 0) {
+          clearTimeout(timeout)
+          reject(new Error(`Server exited with code ${code}`))
         }
       })
     })
